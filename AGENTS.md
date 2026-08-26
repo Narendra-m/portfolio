@@ -24,13 +24,14 @@ The generators drive headless Chrome. On macOS they use
 i.e. `ch = cw * 1.25`):
 
 ```
-node scripts/generate-avatar.mjs --cx=0 --cy=70 --cw=248 --ch=310
+node scripts/generate-avatar.mjs --cx=2920 --cy=1274 --cw=1150 --ch=1437
 ```
 
-Those values are tuned for the current source photo (a 284x469 WhatsApp-
-compressed image, so the result is upscaled and slightly soft — replace
-`avatar-source.jpg` with a higher-resolution original and re-tune when one is
-available). Notes:
+Those values are tuned for the current source photo: a 5196x7790 original in
+which the subject stands on the right of a two-person shot. The crop
+deliberately starts at x=2920 to exclude the second person — Vision segments
+*all* people in frame, so anything left of that boundary reappears as a
+detached fragment in the cut-out. Notes:
 
 - Chrome applies EXIF orientation automatically, so a rotated phone photo is
   already upright by the time it is cropped — use *display* coordinates.
