@@ -1,0 +1,415 @@
+{
+  "meta": {
+    "siteUrl": "https://narendra-m.github.io/portfolio",
+    "title": "Narendra M — Backend & Cloud Architect | AI/LLM Engineering",
+    "description": "Principal/Staff-level backend and cloud architect with 12+ years across retail supply chain, banking and healthcare. Java, Python, Spring Boot, AWS, Kubernetes, Kafka, RAG and LLM solutions.",
+    "keywords": [
+      "Narendra M", "Backend Architect", "Cloud Architect", "Java", "Python",
+      "Spring Boot", "AWS", "Kubernetes", "Kafka", "Microservices",
+      "Prompt Engineering", "RAG", "LLM", "Generative AI", "Bangalore"
+    ],
+    "ogImage": "assets/img/og-image.png",
+    "themeColorDark": "#0f0a1e",
+    "themeColorLight": "#f5f3ff"
+  },
+
+  "profile": {
+    "name": "Narendra M",
+    "shortName": "Narendra",
+    "initials": "NM",
+    "role": "Backend & Cloud Architect | AI/LLM Engineering",
+    "roles": [
+      "Backend & Cloud Architect",
+      "Distributed Systems Engineer",
+      "Java & Spring Boot Specialist",
+      "AWS & Kubernetes Practitioner",
+      "Prompt & RAG Engineer",
+      "Engineering Leader"
+    ],
+    "tagline": "Designing, modernising and scaling distributed platforms — and bringing generative AI into production alongside them.",
+    "location": "Bangalore, Karnataka, India",
+    "phone": "+91 9686121500",
+    "email": "mnarendra500@gmail.com",
+    "avatar": "assets/img/avatar.jpg",
+    "resumeFile": "assets/resume/Narendra_M_Resume.pdf",
+    "availability": "Open to principal & staff-level architecture roles",
+    "socials": [
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/narendranaren/", "icon": "linkedin" },
+      { "label": "GitHub", "url": "https://github.com/Narendra-m", "icon": "github" },
+      { "label": "Email", "url": "mailto:mnarendra500@gmail.com", "icon": "mail" }
+    ],
+    "githubUsername": "Narendra-m",
+    "summary": [
+      "Backend and cloud architect with 12+ years of experience designing, modernising and scaling distributed platforms across retail supply chain, banking and healthcare.",
+      "Hands-on expertise in Java, Python, Spring Boot, AWS, Kubernetes, Kafka, microservices, event-driven systems and RAG architectures.",
+      "Experienced in prompt engineering and LLM solution integration — translating business needs into effective prompts for OpenAI GPT and Hugging Face models, and partnering with developers to ship generative AI and NLP capabilities into production applications.",
+      "Proven record of improving platform performance, availability, cost efficiency and delivery speed while leading architecture governance, modernisation programmes and cross-team engineering initiatives.",
+      "Strong communicator who explains complex technical concepts to non-technical stakeholders, and collaborates closely with domain experts to turn business requirements into working systems."
+    ],
+    "otherSkills": []
+  },
+
+  "stats": [
+    { "value": 12, "suffix": "+", "label": "Years of Experience" },
+    { "value": 95, "suffix": "%", "label": "Pricing Latency Reduced" },
+    { "value": 10, "suffix": "M+", "label": "SKUs Managed at Scale" },
+    { "value": 5, "suffix": "", "label": "Enterprise Platforms Owned" }
+  ],
+
+  "experience": [
+    {
+      "company": "Endava",
+      "role": "Senior Development Lead",
+      "period": "Oct 2025 – Present",
+      "duration": "Current",
+      "location": "Bangalore, India",
+      "current": true,
+      "summary": "Own architecture and technical delivery for cloud-native healthcare pricing and Medicare calculation platforms deployed on AWS EKS, aligning engineering decisions with business-critical pricing outcomes.",
+      "highlights": [
+        "Own end-to-end architecture and technical delivery for healthcare pricing and Medicare calculation platforms on AWS EKS.",
+        "Drive Spec Kit driven (spec-driven) development with Claude as the AI coding agent inside Windsurf, keeping specifications as the source of truth for every feature.",
+        "Define Terraform-based infrastructure and CI/CD patterns adopted across engineering teams.",
+        "Lead architecture governance and cross-team design alignment for HIPAA- and SOC 2-compliant cloud solutions.",
+        "Raise engineering standards for security, resilience and operability across the platform estate."
+      ],
+      "achievements": [
+        "Reduced distributed pricing-calculation response time from 45 seconds to under 2 seconds by redesigning processing flows and introducing Redis caching.",
+        "Improved environment provisioning speed by 60% through Terraform-based infrastructure patterns.",
+        "Introduced Spec Kit driven development with Claude and Windsurf, making AI-assisted delivery repeatable and reviewable across the team.",
+        "Increased delivery consistency across teams with standardised CI/CD pipelines."
+      ],
+      "tech": [
+        "Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes", "CI/CD",
+        "Spec Kit", "Claude", "Windsurf"
+      ]
+    },
+    {
+      "company": "ANZ",
+      "role": "Lead Engineer",
+      "period": "Nov 2023 – Sep 2025",
+      "duration": "~2 years",
+      "location": "Bangalore, India",
+      "current": false,
+      "summary": "Led modernisation of wholesale credit platforms into Spring Boot microservices on AWS EKS, and built the bank's AI-powered document-analysis capability using RAG and LLMs.",
+      "highlights": [
+        "Shaped target architecture and execution for wholesale credit platform modernisation across multiple engineering stakeholders.",
+        "Designed Kafka-based event-driven credit workflows to improve scalability, decoupling and operational resilience.",
+        "Designed and built an AI-powered Retrieval-Augmented Generation (RAG) solution in Python for automated document analysis.",
+        "Developed, tested and iteratively refined prompts for OpenAI GPT and Hugging Face-based LLMs, improving output accuracy and relevance.",
+        "Partnered with developers to integrate the RAG/LLM solution into existing enterprise workflows.",
+        "Built a reusable prompt-engineering framework promoting reuse, knowledge sharing and documented best practices across business units.",
+        "Gathered and analysed user feedback on generated outputs to continuously improve prompt effectiveness.",
+        "Mentored engineers and established enterprise observability practices."
+      ],
+      "achievements": [
+        "Improved API latency by 35% and reduced cloud spend by 20% through performance tuning, autoscaling and systematic optimisation.",
+        "Delivered the bank's reusable prompt-engineering framework, adopted across multiple business units.",
+        "Tracked advancements in LLM tooling (OpenAI, Hugging Face) to inform platform and tool selection decisions."
+      ],
+      "tech": ["Java", "Python", "Spring Boot", "AWS EKS", "Kafka", "LangChain", "OpenAI GPT", "Hugging Face"]
+    },
+    {
+      "company": "Target Corporation",
+      "role": "Senior Software Engineer",
+      "period": "Aug 2018 – Nov 2023",
+      "duration": "5+ years",
+      "location": "Bangalore, India",
+      "current": false,
+      "summary": "Architected inventory-management systems supporting 10M+ SKUs across 1,800+ stores, directly powering large-scale retail supply-chain operations.",
+      "highlights": [
+        "Architected inventory-management systems supporting 10M+ SKUs across 1,800+ stores.",
+        "Designed scalable event-driven services using Java, Spring Boot, Kafka and Kubernetes for high-volume inventory updates across stores and digital channels.",
+        "Led platform migration to AWS and GCP, improving extensibility and operational efficiency.",
+        "Implemented Kubernetes-based deployment and reliability practices for business-critical inventory services.",
+        "Partnered across engineering and business teams to resolve performance and scalability bottlenecks."
+      ],
+      "achievements": [
+        "Reduced infrastructure costs by 20% through multi-cloud platform migration.",
+        "Sustained 99.9% platform uptime for business-critical inventory services.",
+        "Scaled inventory processing to 10M+ SKUs across 1,800+ retail stores."
+      ],
+      "tech": ["Java", "Spring Boot", "Kafka", "Kubernetes", "AWS", "GCP", "MongoDB"]
+    },
+    {
+      "company": "Philips Innovation Campus",
+      "role": "Senior Software Engineer",
+      "period": "Oct 2016 – Aug 2018",
+      "duration": "~2 years",
+      "location": "Bangalore, India",
+      "current": false,
+      "summary": "Built secure healthcare-monitoring services and containerised platforms for connected medical devices.",
+      "highlights": [
+        "Developed secure healthcare-monitoring services and APIs using Java, Spring, Spring Security and JWT.",
+        "Designed Docker- and Kubernetes-based platforms for connected healthcare devices.",
+        "Improved deployment consistency and scalability across connected-device services."
+      ],
+      "achievements": [
+        "Delivered secure, standards-compliant APIs for connected healthcare monitoring.",
+        "Introduced containerised deployment practices for medical-device platforms."
+      ],
+      "tech": ["Java", "Spring", "Spring Security", "JWT", "Docker", "Kubernetes"]
+    },
+    {
+      "company": "Cognizant Technology Solutions",
+      "role": "Programmer Analyst",
+      "period": "Dec 2013 – Sep 2016",
+      "duration": "~3 years",
+      "location": "India",
+      "current": false,
+      "summary": "Delivered CVS/Caremark pharmacy solutions improving refill adherence and patient engagement.",
+      "highlights": [
+        "Delivered CVS/Caremark pharmacy solutions that improved refill adherence and patient engagement.",
+        "Enhanced prescription-management systems with notification and alert capabilities for critical customer workflows."
+      ],
+      "achievements": [
+        "Improved prescription refill adherence through targeted notification workflows."
+      ],
+      "tech": ["Java", "J2EE", "SQL", "Web Services"]
+    }
+  ],
+
+  "projects": [
+    {
+      "name": "Healthcare Pricing & Medicare Calculation Platform",
+      "org": "Endava",
+      "period": "Oct 2025 – Present",
+      "featured": true,
+      "overview": "A cloud-native pricing engine running on AWS EKS that performs distributed Medicare and commercial pricing calculations for business-critical healthcare workflows, built to HIPAA and SOC 2 standards. Delivered using Spec Kit driven (spec-driven) development with Claude as the AI coding agent inside Windsurf, so every feature traces back to an executable, reviewed specification.",
+      "tech": [
+        "Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes",
+        "Spec Kit", "Spec-Driven Development", "Claude", "Windsurf", "CI/CD"
+      ],
+      "useCases": [
+        "Inpatient Prospective Payment System (IPPS) / MS-DRG pricing calculations.",
+        "Outpatient Prospective Payment System (OPPS) / APC pricing calculations.",
+        "Physician Fee Schedule (PFS) pricing.",
+        "Ambulatory Surgical Center (ASC) pricing.",
+        "Skilled Nursing Facility (SNF) and Home Health / Hospice pricing.",
+        "Clinical Laboratory Fee Schedule (CLFS) and DMEPOS pricing.",
+        "Commercial contract and custom fee-schedule pricing alongside Medicare rates.",
+        "Bulk claim repricing and high-volume batch reprocessing runs.",
+        "Effective-dated rate versioning so historical claims price against the correct period.",
+        "Pricing explainability and audit trails showing how each rate was derived.",
+        "Rate-table ingestion and validation from CMS reference data releases.",
+        "Exposed pricing APIs consumed by downstream claims and billing systems."
+      ],
+      "practices": [
+        "Spec Kit driven development: every change begins as a written specification that is reviewed before any code is generated.",
+        "Used the Spec Kit workflow end to end — constitution, specify, plan, tasks and implement phases.",
+        "Claude used as the AI coding agent to turn approved specs into implementation plans, task breakdowns and code.",
+        "Windsurf used as the AI-assisted IDE for day-to-day development, refactoring and code review.",
+        "Specifications kept as the source of truth and versioned in the repository alongside the code.",
+        "Architect-led review of every AI-generated plan and task list before implementation.",
+        "Test coverage and acceptance criteria derived directly from the specification.",
+        "Documented prompting and spec-authoring conventions so the workflow is repeatable across the team."
+      ],
+      "responsibilities": [
+        "Own the platform architecture and technical delivery end to end.",
+        "Introduced and championed Spec Kit driven development with Claude and Windsurf across the team.",
+        "Redesigned distributed calculation flows and introduced Redis caching for hot pricing data.",
+        "Defined Terraform modules and CI/CD pipeline patterns reused across teams.",
+        "Led architecture governance and cross-team design reviews for compliance-sensitive services.",
+        "Set standards for security, resilience and operability across environments."
+      ],
+      "impact": "Cut pricing-calculation response time from 45 seconds to under 2 seconds and improved environment provisioning speed by 60%. Spec-driven development with Claude and Windsurf shortened the path from requirement to reviewed implementation and kept specs, tests and code in sync.",
+      "links": []
+    },
+    {
+      "name": "AI Document Analysis — RAG & Prompt Engineering Platform",
+      "org": "ANZ",
+      "period": "2024 – Sep 2025",
+      "featured": true,
+      "overview": "A Python-based Retrieval-Augmented Generation solution that automates analysis of complex credit and legal documents, integrated directly into existing enterprise banking workflows.",
+      "tech": ["Python", "LangChain", "OpenAI GPT", "Hugging Face", "Vector Search", "REST APIs"],
+      "responsibilities": [
+        "Designed and built the RAG pipeline: ingestion, chunking, embeddings, retrieval and generation.",
+        "Collaborated with domain experts to translate business requirements into clear, effective LLM prompts.",
+        "Developed, tested and iteratively refined prompts to improve output accuracy and relevance.",
+        "Partnered with software developers to integrate the solution into production enterprise workflows.",
+        "Built a scalable prompt-engineering framework promoting reuse, knowledge sharing and documented best practices.",
+        "Gathered and analysed user feedback on generated outputs to continuously improve prompt effectiveness.",
+        "Tracked LLM tooling advancements to inform platform and tool selection."
+      ],
+      "impact": "Automated manual document review across multiple use cases and established the reusable prompt-engineering framework adopted across business units.",
+      "links": []
+    },
+    {
+      "name": "Wholesale Credit Platform Modernisation",
+      "org": "ANZ",
+      "period": "Nov 2023 – Sep 2025",
+      "featured": true,
+      "overview": "Modernisation of legacy wholesale credit systems into Spring Boot microservices on AWS EKS, with Kafka-based event-driven credit workflows replacing tightly coupled batch processes.",
+      "tech": ["Java", "Spring Boot", "AWS EKS", "Kafka", "Kubernetes", "Observability"],
+      "responsibilities": [
+        "Shaped the target architecture and modernisation roadmap across multiple stakeholder teams.",
+        "Designed Kafka-based event-driven credit workflows for scalability and decoupling.",
+        "Drove performance tuning and autoscaling strategy across services.",
+        "Established enterprise observability practices for production insight and troubleshooting.",
+        "Mentored engineers and led design reviews."
+      ],
+      "impact": "Improved API latency by 35% and reduced cloud spend by 20% while increasing operational resilience of critical credit processes.",
+      "links": []
+    },
+    {
+      "name": "Enterprise Inventory Management Platform",
+      "org": "Target Corporation",
+      "period": "Aug 2018 – Nov 2023",
+      "featured": false,
+      "overview": "Event-driven inventory platform tracking 10M+ SKUs across 1,800+ retail stores and digital channels, migrated to a multi-cloud AWS and GCP footprint.",
+      "tech": ["Java", "Spring Boot", "Kafka", "Kubernetes", "AWS", "GCP", "MongoDB"],
+      "responsibilities": [
+        "Architected the inventory domain services and event contracts.",
+        "Built high-throughput Kafka consumers for real-time inventory updates.",
+        "Led the migration from on-premise infrastructure to AWS and GCP.",
+        "Implemented Kubernetes deployment and reliability practices.",
+        "Resolved performance and scalability bottlenecks across enterprise workflows."
+      ],
+      "impact": "Sustained 99.9% uptime for business-critical inventory services while reducing infrastructure costs by 20%.",
+      "links": []
+    },
+    {
+      "name": "Connected Healthcare Monitoring Services",
+      "org": "Philips Innovation Campus",
+      "period": "Oct 2016 – Aug 2018",
+      "featured": false,
+      "overview": "Secure backend services and APIs for connected healthcare monitoring devices, deployed on containerised Docker and Kubernetes platforms.",
+      "tech": ["Java", "Spring", "Spring Security", "JWT", "Docker", "Kubernetes"],
+      "responsibilities": [
+        "Developed secure REST APIs with Spring Security and JWT-based authentication.",
+        "Designed container platform topology for connected-device workloads.",
+        "Improved deployment consistency and horizontal scalability."
+      ],
+      "impact": "Delivered secure, scalable services underpinning connected medical-device monitoring.",
+      "links": []
+    }
+  ],
+
+  "skillGroups": [
+    {
+      "name": "Architecture & Strategy",
+      "icon": "server",
+      "skills": [
+        { "name": "Distributed Systems Design", "level": 93 },
+        { "name": "Cloud-Native Architecture", "level": 92 },
+        { "name": "Architecture Reviews & Governance", "level": 90 },
+        { "name": "Modernisation Roadmaps", "level": 88 },
+        { "name": "Platform Extensibility", "level": 85 }
+      ]
+    },
+    {
+      "name": "Backend & Platforms",
+      "icon": "server",
+      "skills": [
+        { "name": "Java & Spring Boot", "level": 95 },
+        { "name": "Microservices & REST APIs", "level": 92 },
+        { "name": "Apache Kafka / Event-Driven", "level": 90 },
+        { "name": "Python", "level": 82 },
+        { "name": "Redis / MongoDB", "level": 82 }
+      ]
+    },
+    {
+      "name": "AI/ML & Prompt Engineering",
+      "icon": "users",
+      "skills": [
+        { "name": "Prompt Engineering", "level": 88 },
+        { "name": "Spec-Driven Development (Spec Kit)", "level": 88 },
+        { "name": "AI-Assisted Delivery (Claude, Windsurf)", "level": 87 },
+        { "name": "RAG Architectures", "level": 85 },
+        { "name": "OpenAI GPT Models", "level": 85 },
+        { "name": "LangChain & Hugging Face", "level": 80 },
+        { "name": "NLP Fundamentals", "level": 72 },
+        { "name": "Pandas / NumPy", "level": 68 }
+      ]
+    },
+    {
+      "name": "Cloud & Delivery",
+      "icon": "cloud",
+      "skills": [
+        { "name": "AWS (EKS, EC2, S3)", "level": 90 },
+        { "name": "Kubernetes & Docker", "level": 88 },
+        { "name": "Terraform & IaC", "level": 85 },
+        { "name": "CI/CD & Automation", "level": 88 },
+        { "name": "GCP", "level": 72 }
+      ]
+    },
+    {
+      "name": "Reliability & Leadership",
+      "icon": "users",
+      "skills": [
+        { "name": "Performance Engineering", "level": 92 },
+        { "name": "High Availability & Failure Isolation", "level": 88 },
+        { "name": "Observability", "level": 87 },
+        { "name": "Mentoring & Design Reviews", "level": 90 },
+        { "name": "Stakeholder Communication", "level": 88 }
+      ]
+    }
+  ],
+
+  "skillTags": [
+    "Java", "Python", "Spring Boot", "Microservices", "REST APIs", "Apache Kafka",
+    "Event-Driven Architecture", "Redis", "MongoDB", "AWS", "AWS EKS", "GCP",
+    "Kubernetes", "Docker", "Terraform", "CI/CD", "Observability", "Autoscaling",
+    "Prompt Engineering", "OpenAI GPT", "Hugging Face", "LangChain", "RAG",
+    "Generative AI", "LLMs", "NLP", "Pandas", "NumPy", "Git",
+    "Spec Kit", "Spec-Driven Development", "Claude", "Windsurf", "AI-Assisted Development",
+    "Distributed Systems", "High Availability", "Performance Engineering",
+    "Architecture Governance", "HIPAA", "SOC 2"
+  ],
+
+  "otherSkills": [
+    { "name": "Healthcare Domain", "detail": "Medicare pricing, HIPAA & SOC 2 compliant platforms" },
+    { "name": "Banking Domain", "detail": "Wholesale credit workflows and institutional banking" },
+    { "name": "Retail Supply Chain", "detail": "Inventory management at 10M+ SKU scale" },
+    { "name": "Prompt Engineering Practice", "detail": "Reusable frameworks, evaluation loops, documentation" },
+    { "name": "Technical Documentation", "detail": "Architecture diagrams, ADRs, runbooks" },
+    { "name": "Mentoring", "detail": "Growing engineers through design reviews and pairing" }
+  ],
+
+  "education": [
+    {
+      "degree": "Bachelor of Engineering",
+      "field": "Computer Science & Engineering",
+      "institution": "Jawaharlal Nehru National College of Engineering, Shimoga",
+      "board": "Visvesvaraya Technological University",
+      "year": "2013",
+      "performance": ""
+    }
+  ],
+
+  "awards": [
+    {
+      "title": "AWS Certified Developer — Associate",
+      "org": "Amazon Web Services",
+      "year": "",
+      "note": "Certification covering cloud-native application development on AWS."
+    },
+    {
+      "title": "Spring Professional Certification",
+      "org": "VMware / Pivotal",
+      "year": "",
+      "note": "Certification covering Spring Framework and Spring Boot application development."
+    }
+  ],
+
+  "personal": {
+    "dateOfBirth": "",
+    "nationality": "Indian",
+    "location": "Bangalore, Karnataka",
+    "languages": ["English", "Kannada", "Hindi"],
+    "interests": ["Distributed Systems", "Generative AI", "Cloud Cost Engineering"]
+  },
+
+  "contact": {
+    "heading": "Let's Build Something That Scales",
+    "blurb": "Whether you need an architect for a modernisation programme, want to talk distributed systems and cloud cost, or are exploring how to get generative AI into production — my inbox is always open.",
+    "formspreeEndpoint": "",
+    "showPhone": true
+  },
+
+  "resumeOptions": {
+    "includePersonalDetails": true,
+    "includeAwards": true,
+    "includeEducation": true,
+    "footerNote": "References available on request."
+  }
+}

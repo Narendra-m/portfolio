@@ -1,0 +1,16 @@
+{
+  "name": "narendra-m-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio and resume for Narendra M — Backend & Cloud Architect",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/server.mjs",
+    "dev": "node scripts/server.mjs",
+    "pdf": "node scripts/generate-pdf.mjs",
+    "avatar": "node scripts/generate-avatar.mjs",
+    "og": "node scripts/generate-og.mjs",
+    "build": "node scripts/generate-pdf.mjs && node scripts/generate-og.mjs"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "license": "MIT"
+}

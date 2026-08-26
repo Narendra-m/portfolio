@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!--
+  scripts/avatar-template.html
+  Offscreen 800×1000 (4:5) render target for the portrait pipeline.
+
+  ─── Tuneable constants ──────────────────────────────────────────────────
+    CROP    {x, y, w, h}  Source pixels to crop (4:5 = w * 1.25 = h)
+    FEATHER 2             Mask edge blur (px) — softens the cut-out edge
+    TINT    0.08          Brand colour overlay opacity over subject
+    RIM     0.18          Rim light opacity (keep ≤ 0.20)
+    SETTLE  3000          Extra wait (ms) after model loads before screenshot
+    MUTE    0.30          Graduated desaturation below collar (0–1)
+  ─────────────────────────────────────────────────────────────────────────
+-->
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 800px; height: 1000px; overflow: hidden; background: #0f0a1e; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<canvas id="c" width="800" height="1000"></canvas>
+<script type="module">
+/* ── Tuneable Constants ── */
+const params  = new URLSearchParams(location.search);
+const num     = (key, fallback) => {
+  const v = parseFloat(params.get(key));
+  return Number.isFinite(v) ? v : fallback;
+};
+// CROP may be overridden per-run via ?cx=&cy=&cw=&ch= (source pixels, 4:5 ratio)
+const CROP    = { x: num('cx', 0), y: num('cy', 0), w: num('cw', 800), h: num('ch', 1000) };
+const FEATHER = 2;
+const TINT    = 0.08;
+const RIM     = 0.18;
+const SETTLE  = 3000;
+const MUTE    = 0.30;
+
+/* ── Accent colours matching dark theme ── */
+const ACCENT1 = '#8b5cf6';
+const ACCENT2 = '#06b6d4';
+const ACCENT3 = '#f472b6';
+const BG_BASE = '#0f0a1e';
+
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+// Get source filename from query string
+const srcFile = new URLSearchParams(location.search).get('src') || 'avatar-source.jpg';
+const srcUrl  = `../assets/img/${srcFile}`;
+
+async function loadImg(url) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload  = () => res(img);
+    img.onerror = rej;
+    img.src = url;
+  });
+}
+
+function paintBackground() {
+  // Deep space base
+  ctx.fillStyle = BG_BASE;
+  ctx.fillRect(0, 0, W, H);
+
+  // Base gradient
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0,   '#130a2e');
+  bg.addColorStop(0.5, '#0d1a3a');
+  bg.addColorStop(1,   '#0a1520');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Key glow behind head centre-top
+  const headGlow = ctx.createRadialGradient(W * 0.5, H * 0.22, 30, W * 0.5, H * 0.22, 280);
+  headGlow.addColorStop(0, 'rgba(139,92,246,0.45)');
+  headGlow.addColorStop(1, 'rgba(139,92,246,0)');
+  ctx.fillStyle = headGlow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Accent glow left
+  const glowL = ctx.createRadialGradient(W * 0.05, H * 0.5, 0, W * 0.05, H * 0.5, 320);
+  glowL.addColorStop(0, 'rgba(6,182,212,0.30)');
+  glowL.addColorStop(1, 'rgba(6,182,212,0)');
+  ctx.fillStyle = glowL;
+  ctx.fillRect(0, 0, W, H);
+
+  // Accent glow right
+  const glowR = ctx.createRadialGradient(W * 0.95, H * 0.6, 0, W * 0.95, H * 0.6, 280);
+  glowR.addColorStop(0, 'rgba(244,114,182,0.20)');
+  glowR.addColorStop(1, 'rgba(244,114,182,0)');
+  ctx.fillStyle = glowR;
+  ctx.fillRect(0, 0, W, H);
+
+  // Corner vignette falloff
+  const vign = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.85);
+  vign.addColorStop(0, 'rgba(0,0,0,0)');
+  vign.addColorStop(1, 'rgba(0,0,0,0.55)');
+  ctx.fillStyle = vign;
+  ctx.fillRect(0, 0, W, H);
+}
+
+async function compositeSubject(srcImg) {
+  // Off-screen canvas for segmentation output
+  const offW = W, offH = H;
+  const tempC = new OffscreenCanvas(offW, offH);
+  const tempCtx = tempC.getContext('2d');
+
+  // Draw & crop source image
+  const cropX = CROP.x;
+  const cropY = CROP.y;
+  const cropW = CROP.w || srcImg.naturalWidth;
+  const cropH = CROP.h || srcImg.naturalHeight;
+  tempCtx.drawImage(srcImg, cropX, cropY, cropW, cropH, 0, 0, offW, offH);
+
+  let segImageData = null;
+
+  /* ── Try MediaPipe Selfie Segmentation ── */
+  // The MediaPipe bundle is a UMD/IIFE script with no ES exports, so it must be
+  // loaded via a classic <script> tag (it assigns window.SelfieSegmentation)
+  // rather than dynamic import().
+  function loadScript(url) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = url; s.crossOrigin = 'anonymous';
+      s.onload = res;
+      s.onerror = () => rej(new Error(`failed to load ${url}`));
+      document.head.appendChild(s);
+    });
+  }
+
+  try {
+    const BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1';
+    await loadScript(`${BASE}/selfie_segmentation.js`);
+
+    const SelfieSegmentation = window.SelfieSegmentation;
+    if (typeof SelfieSegmentation !== 'function') {
+      throw new Error('window.SelfieSegmentation not found after script load');
+    }
+
+    // Segment the CROPPED region, not the full photo — otherwise the returned
+    // mask is stretched onto a different framing and misaligns with the subject.
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = offW; cropCanvas.height = offH;
+    cropCanvas.getContext('2d').drawImage(
+      srcImg, CROP.x, CROP.y, CROP.w || srcImg.naturalWidth, CROP.h || srcImg.naturalHeight,
+      0, 0, offW, offH
+    );
+
+    segImageData = await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('segmentation timed out')), 45000);
+      const seg = new SelfieSegmentation({ locateFile: f => `${BASE}/${f}` });
+      seg.setOptions({ modelSelection: 1 });
+
+      seg.onResults(results => {
+        clearTimeout(timer);
+        const maskCanvas = document.createElement('canvas');
+        maskCanvas.width = offW; maskCanvas.height = offH;
+        const maskCtx = maskCanvas.getContext('2d');
+        maskCtx.drawImage(results.segmentationMask, 0, 0, offW, offH);
+        resolve(maskCtx.getImageData(0, 0, offW, offH));
+        seg.close();
+      });
+
+      seg.send({ image: cropCanvas }).catch(reject);
+    });
+    console.log('MediaPipe segmentation applied.');
+  } catch (e) {
+    console.warn('MediaPipe not available, compositing with original background:', e.message);
+  }
+
+  /* ── Subject compositing canvas ── */
+  const subjC = new OffscreenCanvas(offW, offH);
+  const subjCtx = subjC.getContext('2d');
+  subjCtx.drawImage(tempC, 0, 0);
+
+  if (segImageData) {
+    // Apply feathered mask: blur first, then destination-in
+    const blurC = new OffscreenCanvas(offW, offH);
+    const blurCtx = blurC.getContext('2d');
+    blurCtx.filter = `blur(${FEATHER}px)`;
+    const maskC = new OffscreenCanvas(offW, offH);
+    const maskCtx2 = maskC.getContext('2d');
+    maskCtx2.putImageData(segImageData, 0, 0);
+    blurCtx.drawImage(maskC, 0, 0);
+
+    subjCtx.globalCompositeOperation = 'destination-in';
+    subjCtx.drawImage(blurC, 0, 0);
+    subjCtx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ── Ambient occlusion shadow ── */
+  const shadowC = new OffscreenCanvas(offW, offH);
+  const shadowCtx = shadowC.getContext('2d');
+  if (segImageData) {
+    const maskC2 = new OffscreenCanvas(offW, offH);
+    const maskCtx3 = maskC2.getContext('2d');
+    maskCtx3.putImageData(segImageData, 0, 0);
+    shadowCtx.filter = 'blur(18px)';
+    shadowCtx.globalAlpha = 0.55;
+    shadowCtx.drawImage(maskC2, 6, 10);  // slight offset
+  }
+
+  /* ── Paint to main canvas ── */
+  // Shadow first
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+  const shadowBlend = ctx.createImageData(offW, offH); // (just draw shadow canvas)
+  ctx.drawImage(shadowC, 0, 0);
+
+  // Subject
+  ctx.drawImage(subjC, 0, 0);
+
+  /* ── Rim light (right edge, ≤ 20%) ── */
+  const rimGrad = ctx.createLinearGradient(W * 0.7, 0, W, 0);
+  rimGrad.addColorStop(0,   'rgba(6,182,212,0)');
+  rimGrad.addColorStop(0.7, `rgba(6,182,212,${RIM * 0.6})`);
+  rimGrad.addColorStop(1,   `rgba(6,182,212,${RIM})`);
+  ctx.globalCompositeOperation = 'screen';
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = rimGrad;
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'source-over';
+
+  /* ── Brand tint over subject (soft-light) ── */
+  const tintC = new OffscreenCanvas(offW, offH);
+  const tintCtx = tintC.getContext('2d');
+  tintCtx.fillStyle = ACCENT1;
+  tintCtx.globalAlpha = TINT;
+  tintCtx.fillRect(0, 0, offW, offH);
+  ctx.globalCompositeOperation = 'soft-light';
+  ctx.drawImage(tintC, 0, 0);
+  ctx.globalCompositeOperation = 'source-over';
+
+  /* ── Light roll-off + desaturation towards waist (MUTE) ── */
+  if (MUTE > 0) {
+    const muteGrad = ctx.createLinearGradient(0, H * 0.55, 0, H);
+    muteGrad.addColorStop(0, 'rgba(0,0,0,0)');
+    muteGrad.addColorStop(1, `rgba(0,0,0,${MUTE * 0.5})`);
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = muteGrad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* ── Grade: saturate(.90) contrast(1.04) brightness(.97) — CSS filter ── */
+  // Applied via a full-canvas filter pass
+  const gradeC = new OffscreenCanvas(offW, offH);
+  const gradeCtx = gradeC.getContext('2d');
+  gradeCtx.filter = 'saturate(0.90) contrast(1.04) brightness(0.97)';
+  gradeCtx.drawImage(canvas, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  ctx.drawImage(gradeC, 0, 0);
+}
+
+async function run() {
+  try {
+    const srcImg = await loadImg(srcUrl);
+    paintBackground();
+    await compositeSubject(srcImg);
+  } catch (e) {
+    console.error('Avatar render error:', e);
+    // Fallback: plain background with monogram
+    paintBackground();
+    ctx.font = 'bold 220px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('NM', W / 2, H / 2);
+  } finally {
+    // Signal done to the screenshot trigger
+    await new Promise(r => setTimeout(r, SETTLE));
+    window.__AVATAR_READY__ = true;
+    document.title = 'AVATAR_READY';
+  }
+}
+
+run();
+</script>
+</body>
+</html>

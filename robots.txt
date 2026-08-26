@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://narendra-m.github.io/portfolio/sitemap.xml

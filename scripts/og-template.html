@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--
+  scripts/og-template.html
+  OpenGraph card render target — 1200×630
+  Loaded from the dev server, screenshotted by generate-og.mjs
+-->
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1200px; height: 630px; overflow: hidden;
+      background: #0f0a1e;
+      font-family: 'Inter', sans-serif;
+    }
+    .card {
+      width: 1200px; height: 630px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #130a2e 0%, #0d1a3a 50%, #0a1520 100%);
+    }
+    .blob1 {
+      position: absolute;
+      width: 550px; height: 550px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.35);
+      filter: blur(100px);
+      top: -120px; left: -80px;
+    }
+    .blob2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(6,182,212,0.28);
+      filter: blur(80px);
+      bottom: -80px; right: 300px;
+    }
+    .grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .left {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding: 60px 50px;
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: #06b6d4;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px; height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+    }
+    .name {
+      font-size: 78px;
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 55%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .role {
+      font-size: 22px;
+      color: rgba(255,255,255,0.70);
+      font-weight: 500;
+      margin-bottom: 22px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tagline {
+      font-size: 17px;
+      color: rgba(255,255,255,0.50);
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      background: rgba(139,92,246,0.18);
+      border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 8px;
+      padding: 5px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: #c4b5fd;
+    }
+    .right {
+      position: relative;
+      z-index: 1;
+      width: 360px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .portrait-frame {
+      width: 300px; height: 380px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(139,92,246,0.4);
+      box-shadow: 0 0 60px rgba(139,92,246,0.3), 0 0 120px rgba(6,182,212,0.15);
+    }
+    .portrait-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .monogram {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+      font-size: 100px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.9);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .domain {
+      position: absolute;
+      bottom: 24px; left: 60px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: rgba(255,255,255,0.30);
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="bg"></div>
+  <div class="blob1"></div>
+  <div class="blob2"></div>
+  <div class="grid"></div>
+
+  <div class="left">
+    <div class="eyebrow" id="eyebrow">Portfolio</div>
+    <div class="name" id="og-name">Narendra M</div>
+    <div class="role" id="og-role">Backend &amp; Cloud Architect</div>
+    <div class="tagline" id="og-tagline">Designing, modernising and scaling distributed platforms.</div>
+    <div class="chips" id="og-chips">
+      <span class="chip">Java</span>
+      <span class="chip">Spring Boot</span>
+      <span class="chip">Python</span>
+      <span class="chip">AWS</span>
+      <span class="chip">Kafka</span>
+    </div>
+    <div class="domain" id="og-domain"></div>
+  </div>
+
+  <div class="right">
+    <div class="portrait-frame">
+      <img id="og-portrait" src="../assets/img/avatar.jpg" alt="Narendra M"
+           onerror="this.style.display='none';document.getElementById('og-mono').style.display='flex'" />
+      <div class="monogram" id="og-mono" style="display:none">NM</div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  async function populateOG() {
+    try {
+      const res  = await fetch('../data/profile.json');
+      const data = await res.json();
+      const p    = data.profile;
+      const meta = data.meta;
+
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || ''; };
+      setText('og-name', p.name);
+      setText('og-role', p.role);
+      setText('og-tagline', p.tagline);
+
+      const domain = (meta.siteUrl || '').replace(/^https?:\/\//, '');
+      setText('og-domain', domain);
+
+      const chips = data.skillTags?.slice(0, 5) || [];
+      const chipsEl = document.getElementById('og-chips');
+      if (chipsEl && chips.length) {
+        chipsEl.innerHTML = chips.map(c => `<span class="chip">${c.replace(/</g,'&lt;')}</span>`).join('');
+      }
+    } catch (e) {
+      console.warn('OG template: could not load profile.json', e.message);
+    }
+  }
+
+  populateOG();
+</script>
+</body>
+</html>

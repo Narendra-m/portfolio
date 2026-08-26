@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narendra M — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/resume.css" />
+  <script>
+    // Auto-open print dialog if ?print=1
+    window.addEventListener('DOMContentLoaded', function() {
+      if (new URLSearchParams(location.search).get('print') === '1') {
+        window.__resumePrintPending = true;
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- Screen-only toolbar -->
+  <div class="resume-toolbar" id="resume-toolbar">
+    <a href="index.html" class="toolbar-btn">&#8592; Back to Portfolio</a>
+    <div class="toolbar-right">
+      <button onclick="window.print()" class="toolbar-btn">&#128438; Print</button>
+      <a href="#" id="toolbar-download" class="toolbar-btn primary" download>&#8595; Download PDF</a>
+    </div>
+  </div>
+
+  <!-- A4 Resume Sheet -->
+  <div class="resume-page" id="resume-page">
+    <header class="res-header" id="res-header">
+      <!-- filled by resume.js -->
+    </header>
+
+    <div class="res-body" id="res-body">
+      <!-- filled by resume.js -->
+    </div>
+  </div>
+
+  <script src="assets/js/resume.js" type="module"></script>
+</body>
+</html>
