@@ -5,7 +5,6 @@
 
   ─── Tuneable constants ──────────────────────────────────────────────────
     CROP    {x, y, w, h}  Source pixels to crop (4:5 = w * 1.25 = h)
-    FEATHER 2             Mask edge blur (px) — softens the cut-out edge
     TINT    0.08          Brand colour overlay opacity over subject
     RIM     0.18          Rim light opacity (keep ≤ 0.20)
     SETTLE  3000          Extra wait (ms) after model loads before screenshot
@@ -32,7 +31,6 @@ const num     = (key, fallback) => {
 };
 // CROP may be overridden per-run via ?cx=&cy=&cw=&ch= (source pixels, 4:5 ratio)
 const CROP    = { x: num('cx', 0), y: num('cy', 0), w: num('cw', 800), h: num('ch', 1000) };
-const FEATHER = 2;
 const TINT    = 0.08;
 const RIM     = 0.18;
 const SETTLE  = 3000;
@@ -104,105 +102,42 @@ function paintBackground() {
   ctx.fillRect(0, 0, W, H);
 }
 
-async function compositeSubject(srcImg) {
-  // Off-screen canvas for segmentation output
+async function compositeSubject(srcImg, cutoutImg) {
   const offW = W, offH = H;
-  const tempC = new OffscreenCanvas(offW, offH);
-  const tempCtx = tempC.getContext('2d');
-
-  // Draw & crop source image
-  const cropX = CROP.x;
-  const cropY = CROP.y;
-  const cropW = CROP.w || srcImg.naturalWidth;
-  const cropH = CROP.h || srcImg.naturalHeight;
-  tempCtx.drawImage(srcImg, cropX, cropY, cropW, cropH, 0, 0, offW, offH);
-
-  let segImageData = null;
-
-  /* ── Try MediaPipe Selfie Segmentation ── */
-  // The MediaPipe bundle is a UMD/IIFE script with no ES exports, so it must be
-  // loaded via a classic <script> tag (it assigns window.SelfieSegmentation)
-  // rather than dynamic import().
-  function loadScript(url) {
-    return new Promise((res, rej) => {
-      const s = document.createElement('script');
-      s.src = url; s.crossOrigin = 'anonymous';
-      s.onload = res;
-      s.onerror = () => rej(new Error(`failed to load ${url}`));
-      document.head.appendChild(s);
-    });
-  }
-
-  try {
-    const BASE = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1';
-    await loadScript(`${BASE}/selfie_segmentation.js`);
-
-    const SelfieSegmentation = window.SelfieSegmentation;
-    if (typeof SelfieSegmentation !== 'function') {
-      throw new Error('window.SelfieSegmentation not found after script load');
-    }
-
-    // Segment the CROPPED region, not the full photo — otherwise the returned
-    // mask is stretched onto a different framing and misaligns with the subject.
-    const cropCanvas = document.createElement('canvas');
-    cropCanvas.width = offW; cropCanvas.height = offH;
-    cropCanvas.getContext('2d').drawImage(
-      srcImg, CROP.x, CROP.y, CROP.w || srcImg.naturalWidth, CROP.h || srcImg.naturalHeight,
-      0, 0, offW, offH
-    );
-
-    segImageData = await new Promise((resolve, reject) => {
-      const timer = setTimeout(() => reject(new Error('segmentation timed out')), 45000);
-      const seg = new SelfieSegmentation({ locateFile: f => `${BASE}/${f}` });
-      seg.setOptions({ modelSelection: 1 });
-
-      seg.onResults(results => {
-        clearTimeout(timer);
-        const maskCanvas = document.createElement('canvas');
-        maskCanvas.width = offW; maskCanvas.height = offH;
-        const maskCtx = maskCanvas.getContext('2d');
-        maskCtx.drawImage(results.segmentationMask, 0, 0, offW, offH);
-        resolve(maskCtx.getImageData(0, 0, offW, offH));
-        seg.close();
-      });
-
-      seg.send({ image: cropCanvas }).catch(reject);
-    });
-    console.log('MediaPipe segmentation applied.');
-  } catch (e) {
-    console.warn('MediaPipe not available, compositing with original background:', e.message);
-  }
 
   /* ── Subject compositing canvas ── */
   const subjC = new OffscreenCanvas(offW, offH);
   const subjCtx = subjC.getContext('2d');
-  subjCtx.drawImage(tempC, 0, 0);
 
-  if (segImageData) {
-    // Apply feathered mask: blur first, then destination-in
-    const blurC = new OffscreenCanvas(offW, offH);
-    const blurCtx = blurC.getContext('2d');
-    blurCtx.filter = `blur(${FEATHER}px)`;
-    const maskC = new OffscreenCanvas(offW, offH);
-    const maskCtx2 = maskC.getContext('2d');
-    maskCtx2.putImageData(segImageData, 0, 0);
-    blurCtx.drawImage(maskC, 0, 0);
-
-    subjCtx.globalCompositeOperation = 'destination-in';
-    subjCtx.drawImage(blurC, 0, 0);
-    subjCtx.globalCompositeOperation = 'source-over';
+  if (cutoutImg) {
+    // Pre-masked PNG from scripts/cutout.swift (Apple Vision person
+    // segmentation). Alpha is already baked in, so it needs no masking here.
+    // This replaces MediaPipe, whose WASM model stalls indefinitely in
+    // headless Chrome without a GPU.
+    subjCtx.drawImage(cutoutImg, 0, 0, offW, offH);
+  } else {
+    // No cut-out available — fall back to the raw crop, background included.
+    subjCtx.drawImage(
+      srcImg,
+      CROP.x, CROP.y, CROP.w || srcImg.naturalWidth, CROP.h || srcImg.naturalHeight,
+      0, 0, offW, offH
+    );
   }
 
-  /* ── Ambient occlusion shadow ── */
+  /* ── Ambient occlusion shadow (derived from the cut-out's alpha) ── */
   const shadowC = new OffscreenCanvas(offW, offH);
   const shadowCtx = shadowC.getContext('2d');
-  if (segImageData) {
-    const maskC2 = new OffscreenCanvas(offW, offH);
-    const maskCtx3 = maskC2.getContext('2d');
-    maskCtx3.putImageData(segImageData, 0, 0);
-    shadowCtx.filter = 'blur(18px)';
+  if (cutoutImg) {
+    shadowCtx.filter = `blur(18px)`;
     shadowCtx.globalAlpha = 0.55;
-    shadowCtx.drawImage(maskC2, 6, 10);  // slight offset
+    shadowCtx.drawImage(cutoutImg, 6, 10, offW, offH);  // slight offset
+    // Darken the silhouette so it reads as shadow rather than a ghost image
+    shadowCtx.filter = 'none';
+    shadowCtx.globalCompositeOperation = 'source-in';
+    shadowCtx.globalAlpha = 1;
+    shadowCtx.fillStyle = 'rgba(0,0,0,0.75)';
+    shadowCtx.fillRect(0, 0, offW, offH);
+    shadowCtx.globalCompositeOperation = 'source-over';
   }
 
   /* ── Paint to main canvas ── */
@@ -261,8 +196,21 @@ async function compositeSubject(srcImg) {
 async function run() {
   try {
     const srcImg = await loadImg(srcUrl);
+
+    // Prefer the pre-masked cut-out if one was generated.
+    let cutoutImg = null;
+    const cutoutFile = params.get('cutout');
+    if (cutoutFile) {
+      try {
+        cutoutImg = await loadImg(`../assets/img/${cutoutFile}`);
+        console.log('Using pre-masked cut-out:', cutoutFile);
+      } catch {
+        console.warn(`Cut-out ${cutoutFile} not found — using the raw crop instead.`);
+      }
+    }
+
     paintBackground();
-    await compositeSubject(srcImg);
+    await compositeSubject(srcImg, cutoutImg);
   } catch (e) {
     console.error('Avatar render error:', e);
     // Fallback: plain background with monogram

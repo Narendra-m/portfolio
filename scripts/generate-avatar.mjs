@@ -50,16 +50,39 @@ async function main() {
   console.log(`  Source     : ${sourceFile}`);
   console.log(`  Output     : ${outPath}\n`);
 
+  // Generate a transparent-background cut-out with Apple Vision first. Runs
+  // offline and replaces MediaPipe, which stalls in headless Chrome with no GPU.
+  const cropArgs = ['cx', 'cy', 'cw', 'ch']
+    .map(k => process.argv.find(a => a.startsWith(`--${k}=`)))
+    .filter(Boolean);
+
+  let cutoutFile = null;
+  if (process.platform === 'darwin') {
+    const { execFileSync } = await import('node:child_process');
+    try {
+      execFileSync('swift', [
+        join(ROOT, 'scripts', 'cutout.swift'),
+        `--src=${join(imgDir, sourceFile)}`,
+        `--out=${join(imgDir, 'avatar-cutout.png')}`,
+        '--w=800', '--h=1000',
+        ...cropArgs,
+      ], { stdio: 'inherit' });
+      cutoutFile = 'avatar-cutout.png';
+    } catch {
+      console.warn('  ! Vision cut-out failed — falling back to the raw crop.');
+    }
+  }
+
   const { server, port } = await startServer(0);
 
   // Forward crop overrides: node scripts/generate-avatar.mjs --cx=160 --cy=401 --cw=2000 --ch=2500
-  const crop = new URLSearchParams();
+  const qs = new URLSearchParams({ src: sourceFile });
   for (const key of ['cx', 'cy', 'cw', 'ch']) {
     const arg = process.argv.find(a => a.startsWith(`--${key}=`));
-    if (arg) crop.set(key, arg.split('=')[1]);
+    if (arg) qs.set(key, arg.split('=')[1]);
   }
-  const cropQS = crop.toString() ? `&${crop}` : '';
-  const url = `http://127.0.0.1:${port}/scripts/avatar-template.html?src=${encodeURIComponent(sourceFile)}${cropQS}`;
+  if (cutoutFile) qs.set('cutout', cutoutFile);
+  const url = `http://127.0.0.1:${port}/scripts/avatar-template.html?${qs}`;
 
   console.log(`  Template   : ${url}\n`);
 

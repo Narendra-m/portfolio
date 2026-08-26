@@ -31,12 +31,17 @@ Those values are tuned for the current source photo. Notes:
 
 - Chrome applies EXIF orientation automatically, so a rotated phone photo is
   already upright by the time it is cropped — use *display* coordinates.
+- Background removal runs on macOS via `scripts/cutout.swift`, which uses
+  Apple's Vision person-segmentation model to write a transparent
+  `avatar-cutout.png`. The browser template then composites that over the
+  themed gradient. This replaced MediaPipe, whose WASM model stalls
+  indefinitely in headless Chrome without a GPU (and whose UMD bundle exports
+  nothing, so `import()` could never have resolved it). Off macOS the cut-out
+  step is skipped and the raw crop is used.
 - On non-Windows the script writes `avatar.png`. The published asset is
   `avatar.jpg`; shrink it with
   `sips -s format jpeg -s formatOptions 82 avatar.png --out avatar.jpg`
-  (1.1 MB → ~180 KB) and update the reference if you change the extension.
-- MediaPipe background segmentation is attempted but stalls in headless Chrome
-  without a GPU. It fails soft, leaving the original photo background.
+  (~900 KB → ~150 KB) and update the reference if you change the extension.
 
 ## Verifying generated assets
 
