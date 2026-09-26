@@ -81,7 +81,15 @@
       "tech": [
         "Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes", "CI/CD",
         "Spec Kit", "Claude", "Windsurf"
-      ]
+      ],
+      "resumeBullets": [
+        "Cut distributed Medicare pricing-calculation latency from 45s to under 2s by redesigning the calculation flows and caching hot rate-table and pricing data in Redis on AWS EKS.",
+        "Improved environment provisioning speed by 60% by defining the Terraform modules and CI/CD pipeline patterns adopted across engineering teams.",
+        "Own end-to-end architecture of the healthcare pricing platform — IPPS/MS-DRG, OPPS/APC, Physician Fee Schedule and commercial contract pricing — exposed as APIs to downstream claims and billing systems.",
+        "Lead architecture governance and cross-team design reviews for HIPAA- and SOC 2-compliant services, setting the security, resilience and operability standards used across environments.",
+        "Introduced spec-driven development (Spec Kit) with an AI coding agent and architect review of every generated plan, keeping specifications, tests and code in sync."
+      ],
+      "resumeTech": ["Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes", "CI/CD"]
     },
     {
       "company": "ANZ",
@@ -106,7 +114,14 @@
         "Delivered the bank's reusable prompt-engineering framework, adopted across multiple business units.",
         "Tracked advancements in LLM tooling (OpenAI, Hugging Face) to inform platform and tool selection decisions."
       ],
-      "tech": ["Java", "Python", "Spring Boot", "AWS EKS", "Kafka", "LangChain", "OpenAI GPT", "Hugging Face"]
+      "tech": ["Java", "Python", "Spring Boot", "AWS EKS", "Kafka", "LangChain", "OpenAI GPT", "Hugging Face"],
+      "resumeBullets": [
+        "Improved API latency by 35% and reduced cloud spend by 20% on the wholesale credit platform through performance tuning and an autoscaling strategy across Spring Boot services on AWS EKS.",
+        "Shaped the target architecture and modernisation roadmap for legacy wholesale credit systems, replacing tightly coupled batch processes with Kafka-based event-driven credit workflows.",
+        "Designed and built a production RAG system in Python for credit and legal document analysis — ingestion, chunking, embeddings, vector retrieval and generation with LangChain, OpenAI GPT and Hugging Face models — automating manual document review across multiple use cases.",
+        "Turned user feedback on generated outputs into a repeatable evaluation loop for answer accuracy and relevance, and packaged the prompts, conventions and integration patterns as a reusable framework adopted across multiple business units.",
+        "Mentored engineers, led design reviews and established the enterprise observability practices used for production troubleshooting of critical credit processes."
+      ]
     },
     {
       "company": "Target Corporation",
@@ -128,7 +143,14 @@
         "Sustained 99.9% platform uptime for business-critical inventory services.",
         "Scaled inventory processing to 10M+ SKUs across 1,800+ retail stores."
       ],
-      "tech": ["Java", "Spring Boot", "Kafka", "Kubernetes", "AWS", "GCP", "MongoDB"]
+      "tech": ["Java", "Spring Boot", "Kafka", "Kubernetes", "AWS", "GCP", "MongoDB"],
+      "resumeBullets": [
+        "Architected event-driven inventory services tracking 10M+ SKUs across 1,800+ stores and digital channels, sustaining 99.9% uptime for business-critical inventory workloads.",
+        "Led the migration from on-premise infrastructure to a multi-cloud AWS and GCP footprint, reducing infrastructure costs by 20%.",
+        "Designed the inventory domain services and event contracts, and built high-throughput Kafka consumers for real-time inventory updates with Java, Spring Boot and MongoDB.",
+        "Implemented the Kubernetes deployment and reliability practices that business-critical inventory services ran on.",
+        "Resolved performance and scalability bottlenecks across enterprise inventory workflows, working across engineering and business teams."
+      ]
     },
     {
       "company": "Philips Innovation Campus",
@@ -147,7 +169,12 @@
         "Delivered secure, standards-compliant APIs for connected healthcare monitoring.",
         "Introduced containerised deployment practices for medical-device platforms."
       ],
-      "tech": ["Java", "Spring", "Spring Security", "JWT", "Docker", "Kubernetes"]
+      "tech": ["Java", "Spring", "Spring Security", "JWT", "Docker", "Kubernetes"],
+      "resumeBullets": [
+        "Built secure REST APIs for connected healthcare-monitoring devices using Java, Spring Security and JWT-based authentication.",
+        "Designed the Docker and Kubernetes platform topology for connected-device workloads, introducing containerised deployment for medical-device services."
+      ],
+      "resumeTech": []
     },
     {
       "company": "Cognizant Technology Solutions",
@@ -164,7 +191,9 @@
       "achievements": [
         "Improved prescription refill adherence through targeted notification workflows."
       ],
-      "tech": ["Java", "J2EE", "SQL", "Web Services"]
+      "tech": ["Java", "J2EE", "SQL", "Web Services"],
+      "resumeBullets": [],
+      "resumeTech": []
     }
   ],
 
@@ -406,10 +435,21 @@
     "showPhone": true
   },
 
+  "resume": {
+    "headline": "Backend & Cloud Architect",
+    "summary": "Backend and cloud architect with 12+ years designing and modernising distributed platforms across retail, banking and healthcare. Cut distributed pricing-calculation latency from 45s to under 2s at Endava, ran inventory services for 10M+ SKUs across 1,800+ stores at 99.9% uptime at Target, and led ANZ's wholesale credit modernisation onto Kafka and AWS EKS alongside a production RAG system for credit-document analysis.",
+    "skills": [
+      { "label": "Architecture", "items": ["Distributed Systems", "Event-Driven Architecture", "Architecture Governance", "Performance Engineering"] },
+      { "label": "Platforms & Cloud", "items": ["Java", "Spring Boot", "Apache Kafka", "Redis", "AWS EKS", "Kubernetes", "Terraform"] },
+      { "label": "AI Systems", "items": ["RAG Architecture", "LangChain", "OpenAI GPT", "Python"] }
+    ]
+  },
+
   "resumeOptions": {
-    "includePersonalDetails": true,
+    "includeProjects": false,
+    "includePersonalDetails": false,
     "includeAwards": true,
     "includeEducation": true,
-    "footerNote": "References available on request."
+    "footerNote": ""
   }
 }

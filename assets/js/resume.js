@@ -34,7 +34,9 @@ async function renderResume() {
   const res = await fetch('data/profile.json');
   const d = await res.json();
   const { profile: p, experience, projects, skillGroups,
-          education, awards, personal, resumeOptions: opts } = d;
+          education, awards, personal, resume: r = {}, resumeOptions: opts } = d;
+  const joinParts = (...parts) => parts.filter(Boolean).map(esc).join(' · ');
+  const displayUrl = url => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
   // Update download link
   const dlLink = document.getElementById('toolbar-download');
@@ -49,7 +51,7 @@ async function renderResume() {
     header.innerHTML = `
       <div class="res-header-left">
         <h1 class="res-name">${esc(p.name)}</h1>
-        <div class="res-role">${esc(p.role)}</div>
+        <div class="res-role">${esc(r.headline || p.role)}</div>
         <div class="res-contact-line">
           <span>${esc(p.location)}</span>
           <span class="res-contact-sep">|</span>
@@ -57,10 +59,11 @@ async function renderResume() {
           <span class="res-contact-sep">|</span>
           <a href="mailto:${esc(p.email)}">${esc(p.email)}</a>
         </div>
-      </div>
-      <div class="res-socials-block">
-        ${linkedin ? `<a class="res-social-link" href="${safeHref(linkedin.url)}">LinkedIn ↗</a>` : ''}
-        ${github   ? `<a class="res-social-link" href="${safeHref(github.url)}">GitHub ↗</a>`   : ''}
+        <div class="res-contact-line">
+          ${[linkedin, github].filter(Boolean).map(s =>
+            `<a href="${safeHref(s.url)}">${esc(displayUrl(s.url))}</a>`
+          ).join('<span class="res-contact-sep">|</span>')}
+        </div>
       </div>
     `;
   }
@@ -74,47 +77,44 @@ async function renderResume() {
   /* Profile Summary */
   html += `
     <section class="res-section">
-      <h2 class="res-section-title">Profile Summary</h2>
-      <ul class="res-summary-list">
-        ${(p.summary || []).map(b => `<li>${esc(b)}</li>`).join('')}
-      </ul>
+      <h2 class="res-section-title">Summary</h2>
+      ${r.summary
+        ? `<p class="res-summary-text">${esc(r.summary)}</p>`
+        : `<ul class="res-summary-list">${(p.summary || []).map(b => `<li>${esc(b)}</li>`).join('')}</ul>`}
     </section>`;
 
-  /* Technical Skills */
+  /* Technical Skills — single column so plain-text/ATS extraction keeps each label with its list */
+  const skillRows = r.skills || (skillGroups || []).map(g => ({ label: g.name, items: (g.skills || []).map(s => s.name) }));
   html += `
     <section class="res-section">
-      <h2 class="res-section-title">Technical Skills</h2>
-      <div class="res-skills-grid">
-        ${(skillGroups || []).map(g => `
-          <div>
-            <div class="res-skill-group-name">${esc(g.name)}</div>
-            <div class="res-skill-tags">${(g.skills || []).map(s => esc(s.name)).join(' · ')}</div>
-          </div>
-        `).join('')}
-      </div>
+      <h2 class="res-section-title">Skills</h2>
+      ${skillRows.map(row => `
+        <p class="res-skill-row"><strong>${esc(row.label)}:</strong> ${row.items.map(esc).join(' · ')}</p>
+      `).join('')}
     </section>`;
 
   /* Professional Experience */
   html += `
     <section class="res-section">
       <h2 class="res-section-title">Professional Experience</h2>
-      ${(experience || []).map(exp => `
+      ${(experience || []).map(exp => {
+        const bullets = exp.resumeBullets ?? [...(exp.highlights || []), ...(exp.achievements || [])];
+        const tech = exp.resumeTech ?? exp.tech ?? [];
+        return `
         <div class="res-exp-item">
           <div class="res-exp-header">
             <div class="res-exp-company">${esc(exp.company)}</div>
             <div class="res-exp-period">${esc(exp.period)}</div>
           </div>
-          <div class="res-exp-role">${esc(exp.role)} · ${esc(exp.location)}</div>
-          <ul class="res-exp-list">
-            ${[...(exp.highlights || []), ...(exp.achievements || [])].map(b => `<li>${esc(b)}</li>`).join('')}
-          </ul>
-          <div class="res-exp-tech">Tech: <span>${(exp.tech || []).join(' · ')}</span></div>
-        </div>
-      `).join('')}
+          <div class="res-exp-role">${joinParts(exp.role, exp.location)}</div>
+          ${bullets.length ? `<ul class="res-exp-list">${bullets.map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+          ${tech.length ? `<div class="res-exp-tech">Tech: <span>${tech.map(esc).join(' · ')}</span></div>` : ''}
+        </div>`;
+      }).join('')}
     </section>`;
 
   /* Project Experience */
-  html += `
+  if (opts?.includeProjects !== false && projects?.length) html += `
     <section class="res-section">
       <h2 class="res-section-title">Project Experience</h2>
       ${(projects || []).map(proj => `
@@ -131,37 +131,19 @@ async function renderResume() {
       `).join('')}
     </section>`;
 
-  /* Education */
-  if (opts?.includeEducation !== false && education?.length) {
+  /* Education & Certifications */
+  const showEdu   = opts?.includeEducation !== false && education?.length;
+  const showCerts = opts?.includeAwards !== false && awards?.length;
+  if (showEdu || showCerts) {
     html += `
       <section class="res-section">
-        <h2 class="res-section-title">Education</h2>
-        <div class="res-edu-grid">
-          ${education.map(e => `
-            <div class="res-edu-item">
-              <div class="res-edu-degree">${esc(e.degree)}</div>
-              ${e.field ? `<div class="res-edu-field">${esc(e.field)}</div>` : ''}
-              <div class="res-edu-meta">${esc(e.institution)} · ${esc(e.board)} · ${esc(e.year)} · ${esc(e.performance)}</div>
-            </div>
-          `).join('')}
-        </div>
-      </section>`;
-  }
-
-  /* Awards */
-  if (opts?.includeAwards !== false && awards?.length) {
-    html += `
-      <section class="res-section">
-        <h2 class="res-section-title">Awards &amp; Recognition</h2>
-        <div class="res-awards-list">
-          ${awards.map(a => `
-            <div class="res-award-item">
-              <div class="res-award-title">${esc(a.title)}</div>
-              <div class="res-award-meta">${esc(a.org)} · ${esc(a.year)}</div>
-              ${a.note ? `<div class="res-award-note">${esc(a.note)}</div>` : ''}
-            </div>
-          `).join('')}
-        </div>
+        <h2 class="res-section-title">${[showEdu && 'Education', showCerts && 'Certifications'].filter(Boolean).join(' &amp; ')}</h2>
+        ${showEdu ? education.map(e => `
+          <p class="res-edu-line"><strong>${joinParts(e.degree, e.field)}</strong> — ${joinParts(e.institution, e.board, e.year, e.performance)}</p>
+        `).join('') : ''}
+        ${showCerts ? awards.map(a => `
+          <p class="res-edu-line"><strong>${esc(a.title)}</strong> · ${joinParts(a.org, a.year)}</p>
+        `).join('') : ''}
       </section>`;
   }
 

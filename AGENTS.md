@@ -51,7 +51,18 @@ detached fragment in the cut-out. Notes:
 
 Always check the *content*, not just that the file exists. A misconfigured local
 server previously produced a valid-looking 64 KB PDF that was actually a Chrome
-"site can't be reached" error page. A healthy resume PDF is ~420 KB.
+"site can't be reached" error page. A healthy resume PDF is ~250 KB and exactly
+2 pages; extract its text and confirm it contains the experience bullets.
+
+## Resume content
+
+The printable resume uses resume-only fields so the site can stay richer:
+`resume.headline`, `resume.summary`, `resume.skills` (single-column rows — a
+two-column grid scrambles in ATS text extraction), and per-role
+`experience[].resumeBullets` / `resumeTech` (fall back to highlights+achievements
+/ tech). `resumeOptions` gates Project Experience and Personal Details (both off:
+they duplicated the job history / aren't hiring criteria). Keep one bullet per
+achievement, number first, ≤5 per role.
 
 ## Deployment
 
