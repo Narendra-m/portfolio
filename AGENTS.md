@@ -77,3 +77,7 @@ the published URL — update all three together if the repo name changes.
 Keep `profile.resumeFile` explicitly relative (`./assets/resume/...`). The
 renderers' URL safety helpers reject bare relative paths (`assets/...`) as `#`,
 which breaks both the portfolio résumé link and the résumé-page download link.
+
+Company work appears separately in `experience[]` (Career) and `projects[]`
+(Project Experience). Keep both entries aligned when replacing an employer's
+work description; updating `resumeBullets` alone does not update project cards.

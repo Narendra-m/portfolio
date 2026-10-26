@@ -194,48 +194,35 @@
 
   "projects": [
     {
-      "name": "Healthcare Pricing & Medicare Calculation Platform",
+      "name": "RBC Payment Microservices & AI Engineering",
       "org": "Endava",
       "period": "Oct 2025 – Present",
       "featured": true,
-      "overview": "A cloud-native pricing engine running on AWS EKS that performs distributed Medicare and commercial pricing calculations for business-critical healthcare workflows, built to HIPAA and SOC 2 standards. Delivered using Spec Kit driven (spec-driven) development with Claude as the AI coding agent inside Windsurf, so every feature traces back to an executable, reviewed specification.",
+      "overview": "AI-augmented payment microservices and high-volume transaction data pipelines for RBC Royal Bank of Canada, combining Java and GridGain performance tuning with Apache Iceberg data lifecycle management. Delivered AI-driven engineering workflows with Windsurf Cascade, a GPT-4o and LangChain support assistant over pgvector, and Gen AI-assisted fraud detection.",
       "tech": [
-        "Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes",
-        "Spec Kit", "Spec-Driven Development", "Claude", "Windsurf", "CI/CD"
+        "Java", "GridGain", "Apache Iceberg", "Windsurf Cascade", "CI/CD",
+        "GPT-4o", "LangChain", "pgvector", "RAG", "Generative AI"
       ],
       "useCases": [
-        "Inpatient Prospective Payment System (IPPS) / MS-DRG pricing calculations.",
-        "Outpatient Prospective Payment System (OPPS) / APC pricing calculations.",
-        "Physician Fee Schedule (PFS) pricing.",
-        "Ambulatory Surgical Center (ASC) pricing.",
-        "Skilled Nursing Facility (SNF) and Home Health / Hospice pricing.",
-        "Clinical Laboratory Fee Schedule (CLFS) and DMEPOS pricing.",
-        "Commercial contract and custom fee-schedule pricing alongside Medicare rates.",
-        "Bulk claim repricing and high-volume batch reprocessing runs.",
-        "Effective-dated rate versioning so historical claims price against the correct period.",
-        "Pricing explainability and audit trails showing how each rate was derived.",
-        "Rate-table ingestion and validation from CMS reference data releases.",
-        "Exposed pricing APIs consumed by downstream claims and billing systems."
+        "AI-augmented payment microservices for RBC Royal Bank of Canada.",
+        "Automated transaction data archiving and purging from operational databases to the enterprise Data Lake using Apache Iceberg.",
+        "RAG-based support assistant using GPT-4o and LangChain over pgvector.",
+        "Gen AI-assisted fraud detection with PII redaction to support PCI-DSS and KYC-AML compliance."
       ],
       "practices": [
-        "Spec Kit driven development: every change begins as a written specification that is reviewed before any code is generated.",
-        "Used the Spec Kit workflow end to end — constitution, specify, plan, tasks and implement phases.",
-        "Claude used as the AI coding agent to turn approved specs into implementation plans, task breakdowns and code.",
-        "Windsurf used as the AI-assisted IDE for day-to-day development, refactoring and code review.",
-        "Specifications kept as the source of truth and versioned in the repository alongside the code.",
-        "Architect-led review of every AI-generated plan and task list before implementation.",
-        "Test coverage and acceptance criteria derived directly from the specification.",
-        "Documented prompting and spec-authoring conventions so the workflow is repeatable across the team."
+        "Java performance optimisation and in-memory compute tuning with GridGain.",
+        "Requirement-to-code generation and rapid multi-file refactoring with Windsurf's agentic IDE, Cascade.",
+        "Prompt-driven test generation and automated AI code reviews integrated into CI/CD pipelines.",
+        "AI-paired engineering workflows to improve unit coverage, reviewer throughput and delivery cycle time."
       ],
       "responsibilities": [
-        "Own the platform architecture and technical delivery end to end.",
-        "Introduced and championed Spec Kit driven development with Claude and Windsurf across the team.",
-        "Redesigned distributed calculation flows and introduced Redis caching for hot pricing data.",
-        "Defined Terraform modules and CI/CD pipeline patterns reused across teams.",
-        "Led architecture governance and cross-team design reviews for compliance-sensitive services.",
-        "Set standards for security, resilience and operability across environments."
+        "Architected AI-augmented payment microservices for RBC Royal Bank of Canada, drastically improving system throughput through optimal Java coding and in-memory compute tuning using Apache GridGain.",
+        "Engineered intelligent data lifecycle pipelines to manage high-volume transaction loads, implementing automated archiving and purging strategies that seamlessly bridged operational databases to the enterprise Data Lake using Apache Iceberg.",
+        "Accelerated enterprise feature delivery by pioneering AI-driven engineering workflows, utilizing Windsurf's agentic IDE (Cascade) for complex requirement-to-code generation and rapid multi-file refactoring, sharply reducing average cycle time.",
+        "Modernized CI/CD pipelines by embedding cutting-edge GenAI capabilities—including prompt-driven test generation and automated AI code reviews. This initiative drove up unit coverage, unblocked code reviewers, and established a scalable, AI-paired engineering culture.",
+        "Delivered LLM-backed capabilities including a RAG-based support assistant (GPT-4o + LangChain over pgvector) and Gen AI-assisted fraud detection, with PII redaction ensuring PCI-DSS/KYC-AML compliance."
       ],
-      "impact": "Cut pricing-calculation response time from 45 seconds to under 2 seconds and improved environment provisioning speed by 60%. Spec-driven development with Claude and Windsurf shortened the path from requirement to reviewed implementation and kept specs, tests and code in sync.",
+      "impact": "Improved payment-processing throughput, automated high-volume transaction data lifecycle management, reduced feature delivery cycle time and increased unit coverage through AI-driven engineering. Delivered LLM-backed support and fraud-detection capabilities with PII redaction.",
       "links": []
     },
     {
