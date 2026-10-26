@@ -73,3 +73,7 @@ otherwise the downloadable resume goes stale.
 
 `meta.siteUrl` in `data/profile.json`, `robots.txt` and `sitemap.xml` all hardcode
 the published URL — update all three together if the repo name changes.
+
+Keep `profile.resumeFile` explicitly relative (`./assets/resume/...`). The
+renderers' URL safety helpers reject bare relative paths (`assets/...`) as `#`,
+which breaks both the portfolio résumé link and the résumé-page download link.

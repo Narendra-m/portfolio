@@ -31,7 +31,7 @@
     "phone": "+91 9686121500",
     "email": "mnarendra500@gmail.com",
     "avatar": "assets/img/avatar.jpg",
-    "resumeFile": "assets/resume/Narendra_M_Resume.pdf",
+    "resumeFile": "./assets/resume/Narendra_M_Resume.pdf",
     "availability": "Open to principal & staff-level architecture roles",
     "socials": [
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/narendranaren/", "icon": "linkedin" },
@@ -64,32 +64,27 @@
       "duration": "Current",
       "location": "Bangalore, India",
       "current": true,
-      "summary": "Own architecture and technical delivery for cloud-native healthcare pricing and Medicare calculation platforms deployed on AWS EKS, aligning engineering decisions with business-critical pricing outcomes.",
+      "summary": "Lead architecture and delivery of AI-augmented payment microservices, transaction data pipelines and LLM-backed banking capabilities for RBC Royal Bank of Canada.",
       "highlights": [
-        "Own end-to-end architecture and technical delivery for healthcare pricing and Medicare calculation platforms on AWS EKS.",
-        "Drive Spec Kit driven (spec-driven) development with Claude as the AI coding agent inside Windsurf, keeping specifications as the source of truth for every feature.",
-        "Define Terraform-based infrastructure and CI/CD patterns adopted across engineering teams.",
-        "Lead architecture governance and cross-team design alignment for HIPAA- and SOC 2-compliant cloud solutions.",
-        "Raise engineering standards for security, resilience and operability across the platform estate."
+        "Architected AI-augmented payment microservices for RBC Royal Bank of Canada, drastically improving system throughput through optimal Java coding and in-memory compute tuning using Apache GridGain.",
+        "Engineered intelligent data lifecycle pipelines to manage high-volume transaction loads, implementing automated archiving and purging strategies that seamlessly bridged operational databases to the enterprise Data Lake using Apache Iceberg.",
+        "Accelerated enterprise feature delivery by pioneering AI-driven engineering workflows, utilizing Windsurf's agentic IDE (Cascade) for complex requirement-to-code generation and rapid multi-file refactoring, sharply reducing average cycle time.",
+        "Modernized CI/CD pipelines by embedding cutting-edge GenAI capabilities—including prompt-driven test generation and automated AI code reviews. This initiative drove up unit coverage, unblocked code reviewers, and established a scalable, AI-paired engineering culture.",
+        "Delivered LLM-backed capabilities including a RAG-based support assistant (GPT-4o + LangChain over pgvector) and Gen AI-assisted fraud detection, with PII redaction ensuring PCI-DSS/KYC-AML compliance."
       ],
-      "achievements": [
-        "Reduced distributed pricing-calculation response time from 45 seconds to under 2 seconds by redesigning processing flows and introducing Redis caching.",
-        "Improved environment provisioning speed by 60% through Terraform-based infrastructure patterns.",
-        "Introduced Spec Kit driven development with Claude and Windsurf, making AI-assisted delivery repeatable and reviewable across the team.",
-        "Increased delivery consistency across teams with standardised CI/CD pipelines."
-      ],
+      "achievements": [],
       "tech": [
-        "Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes", "CI/CD",
-        "Spec Kit", "Claude", "Windsurf"
+        "Java", "GridGain", "Apache Iceberg", "Windsurf Cascade", "CI/CD",
+        "GPT-4o", "LangChain", "pgvector", "RAG", "Generative AI"
       ],
       "resumeBullets": [
-        "Cut distributed Medicare pricing-calculation latency from 45s to under 2s by redesigning the calculation flows and caching hot rate-table and pricing data in Redis on AWS EKS.",
-        "Improved environment provisioning speed by 60% by defining the Terraform modules and CI/CD pipeline patterns adopted across engineering teams.",
-        "Own end-to-end architecture of the healthcare pricing platform — IPPS/MS-DRG, OPPS/APC, Physician Fee Schedule and commercial contract pricing — exposed as APIs to downstream claims and billing systems.",
-        "Lead architecture governance and cross-team design reviews for HIPAA- and SOC 2-compliant services, setting the security, resilience and operability standards used across environments.",
-        "Introduced spec-driven development (Spec Kit) with an AI coding agent and architect review of every generated plan, keeping specifications, tests and code in sync."
+        "Architected AI-augmented payment microservices for RBC Royal Bank of Canada, drastically improving system throughput through optimal Java coding and in-memory compute tuning using Apache GridGain.",
+        "Engineered intelligent data lifecycle pipelines to manage high-volume transaction loads, implementing automated archiving and purging strategies that seamlessly bridged operational databases to the enterprise Data Lake using Apache Iceberg.",
+        "Accelerated enterprise feature delivery by pioneering AI-driven engineering workflows, utilizing Windsurf's agentic IDE (Cascade) for complex requirement-to-code generation and rapid multi-file refactoring, sharply reducing average cycle time.",
+        "Modernized CI/CD pipelines by embedding cutting-edge GenAI capabilities—including prompt-driven test generation and automated AI code reviews. This initiative drove up unit coverage, unblocked code reviewers, and established a scalable, AI-paired engineering culture.",
+        "Delivered LLM-backed capabilities including a RAG-based support assistant (GPT-4o + LangChain over pgvector) and Gen AI-assisted fraud detection, with PII redaction ensuring PCI-DSS/KYC-AML compliance."
       ],
-      "resumeTech": ["Java", "Spring Boot", "AWS EKS", "Redis", "Terraform", "Kubernetes", "CI/CD"]
+      "resumeTech": ["Java", "GridGain", "Apache Iceberg", "Windsurf Cascade", "CI/CD", "GPT-4o", "LangChain", "pgvector", "RAG", "Generative AI"]
     },
     {
       "company": "ANZ",
@@ -437,7 +432,7 @@
 
   "resume": {
     "headline": "Backend & Cloud Architect",
-    "summary": "Backend and cloud architect with 12+ years designing and modernising distributed platforms across retail, banking and healthcare. Cut distributed pricing-calculation latency from 45s to under 2s at Endava, ran inventory services for 10M+ SKUs across 1,800+ stores at 99.9% uptime at Target, and led ANZ's wholesale credit modernisation onto Kafka and AWS EKS alongside a production RAG system for credit-document analysis.",
+    "summary": "Backend and cloud architect with 12+ years designing and modernising distributed platforms across retail, banking and healthcare. Architected AI-augmented payment microservices and LLM-backed capabilities for RBC Royal Bank of Canada at Endava, ran inventory services for 10M+ SKUs across 1,800+ stores at 99.9% uptime at Target, and led ANZ's wholesale credit modernisation onto Kafka and AWS EKS alongside a production RAG system for credit-document analysis.",
     "skills": [
       { "label": "Architecture", "items": ["Distributed Systems", "Event-Driven Architecture", "Architecture Governance", "Performance Engineering"] },
       { "label": "Platforms & Cloud", "items": ["Java", "Spring Boot", "Apache Kafka", "Redis", "AWS EKS", "Kubernetes", "Terraform"] },
